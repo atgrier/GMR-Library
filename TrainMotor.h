@@ -2,8 +2,8 @@
   Motor.h
   Created by Alan T. Grier, 23 September 2019.
 */
-#ifndef Motor_h
-#define Motor_h
+#ifndef TrainMotor_h
+#define TrainMotor_h
 
 #include "Arduino.h"
 

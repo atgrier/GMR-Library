@@ -4,7 +4,7 @@
 */
 
 #include "Arduino.h"
-#include "Motor.h"
+#include "TrainMotor.h"
 
 Lighting::Lighting(int LightPin)
 {

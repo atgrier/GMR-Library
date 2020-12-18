@@ -1,3 +1,6 @@
+#ifndef Locomotive_h
+#define Locomotive_h
+
 class Locomotive
 {
 private:
