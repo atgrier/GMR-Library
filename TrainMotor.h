@@ -1,11 +1,10 @@
 /*
-  Motor.h
+  TrainMotor.h
   Created by Alan T. Grier, 23 September 2019.
 */
+
 #ifndef TrainMotor_h
 #define TrainMotor_h
-
-#include "Arduino.h"
 
 class Lighting
 {

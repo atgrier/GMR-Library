@@ -1,5 +1,5 @@
 /*
-  Motor.cpp
+  TrainMotor.cpp
   Created by Alan T. Grier, 23 September 2019.
 */
 
