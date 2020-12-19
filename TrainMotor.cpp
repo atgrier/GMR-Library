@@ -259,7 +259,11 @@ void TwoPinMotor::setSpeed(int motorSpeed)
 void TwoPinMotor::disable(bool zeroSpeed=false)
 {
   if (zeroSpeed)
+  {
     setSpeed(0);
+    _front->Off();
+    _rear->Off();
+  }
   if (!_isEnabled)
     return;
   digitalWrite(_motor1Pin, HIGH);
