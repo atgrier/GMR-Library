@@ -12,6 +12,7 @@ public:
   Lighting(int LightPin);
   void On();
   void Off();
+  void Set(int value);
 
 private:
   int _pin;

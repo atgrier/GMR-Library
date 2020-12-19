@@ -23,6 +23,11 @@ void Lighting::On()
   digitalWrite(_pin, HIGH);
 }
 
+void Lighting::Set(int value)
+{
+  analogWrite(_pin, value);
+}
+
 
 void _rampSpeed(int pin, int start, int target, bool inverse = false)
 {
