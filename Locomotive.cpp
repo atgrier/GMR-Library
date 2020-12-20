@@ -9,3 +9,13 @@ Locomotive::Locomotive(int address)
 {
     ADDRESS = address;
 }
+
+void Locomotive::reverse()
+{
+  direction = -1;
+}
+
+void Locomotive::forward()
+{
+  direction = 1;
+}

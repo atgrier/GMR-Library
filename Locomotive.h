@@ -11,6 +11,8 @@ class Locomotive
 private:
 public:
     Locomotive(int address);
+    void reverse();
+    void forward();
     int ADDRESS;
     int speed = 0;
     int direction = 1;
