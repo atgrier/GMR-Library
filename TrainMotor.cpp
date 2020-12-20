@@ -204,11 +204,6 @@ TwoPinMotor::TwoPinMotor(int motor1Pin, int motor2Pin, Lighting *front = 0, Ligh
     digitalWrite(_motor1Pin, HIGH);
     digitalWrite(_motor2Pin, HIGH);
     _isEnabled = false;
-    if ((front == 0 && rear != 0) || (front != 0 && rear == 0))
-    {
-        front = 0;
-        rear = 0;
-    }
     _front = front;
     _rear = rear;
 }
