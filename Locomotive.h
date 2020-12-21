@@ -6,7 +6,8 @@
 #ifndef Locomotive_h
 #define Locomotive_h
 
-#include <RHReliableDataGram.h>
+#include <ArduinoSTL.h>
+#include <RHReliableDatagram.h>
 
 class Locomotive
 {
@@ -28,5 +29,38 @@ private:
     int _ledPin;                  // Arudino PIN of status LED
     RHReliableDatagram *_manager; // Radio manager
 };
+
+class Controller
+{
+public:
+    Controller(int led0, int led1, int max_speed, std::initializer_list<Locomotive> locomotives);
+    void setCurrent(int current_train);                // Set the currently selected locomotive by array index
+    void setSpeed(int speed, int direction);           // Set the speed and direction
+    void sendThrottles();                              // Send throttle commands to each train
+    void eStopAll();                                   // E-Stop all locomotives
+    void indicatorLED(int state, int previous = -1);   // Set the indicator LEDs
+    int current_train() { return _current; }           // Get the current train
+    int current_speed() { return _current_speed(); }   // Get the current train's speed
+    int current_direction() { return _current_dir(); } // Get the current train's direction
+
+private:
+    int _current_led() { return _locomotives[_current].ledPin(); };
+    int _current_speed() { return _locomotives[_current].speed(); };
+    int _current_dir() { return _locomotives[_current].direction(); };
+    std::vector<Locomotive> _locomotives;
+    int _current = -1;
+    int _led0;
+    int _led1;
+    int _maxSpeed;
+};
+
+// Indicator LED states
+#define FORWARDS 0
+#define REVERSE 1
+#define STOP 2
+#define IDLE 3
+#define WARNING 4
+#define RUNNING 5
+#define THROTTLE 6
 
 #endif

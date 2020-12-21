@@ -48,3 +48,101 @@ void Locomotive::sendEStop()
     pdata[0] = 'e'; // E-Stop
     _manager->sendto((uint8_t *)pdata, strlen(pdata) + 1, _address);
 }
+
+Controller::Controller(int led0, int led1, int max_speed, std::initializer_list<Locomotive> locomotives)
+{
+    _locomotives = locomotives;
+    _led0 = led0;
+    _led1 = led1;
+    _maxSpeed = max_speed;
+}
+
+// Set the currently selected locomotive
+void Controller::setCurrent(int current_train)
+{
+    _current = current_train;
+}
+
+// Send throttle commands to all locomotives
+void Controller::sendThrottles()
+{
+    for (Locomotive &train : _locomotives)
+        train.sendThrottle();
+}
+
+// E-Stop all locomotives
+void Controller::eStopAll()
+{
+    for (int i = 0; i < (int)(sizeof(_locomotives) / sizeof(Locomotive)); i++)
+    {
+        digitalWrite(_locomotives[i].ledPin(), LOW);
+        _locomotives[i].setSpeed(0);
+        _locomotives[i].forward();
+    }
+
+    for (int i = 0; i < 5; i++)
+        for (Locomotive &train : _locomotives)
+            train.sendEStop();
+}
+
+// Set the curent locomotive's speed and direction, using the FORWARDS/REVERSE states
+void Controller::setSpeed(int speed, int direction)
+{
+    _locomotives[_current].setSpeed(speed);
+    if (direction == FORWARDS)
+        _locomotives[_current].forward();
+    else
+        _locomotives[_current].reverse();
+}
+
+// Set indicator LED
+void Controller::indicatorLED(int state, int previous = -1)
+{
+    if (state == FORWARDS)
+    {
+        digitalWrite(_led1, LOW);
+        analogWrite(_led0, map(_current_speed(), 0, _maxSpeed, 0, 255));
+        digitalWrite(_current_led(), (_current_speed() == _maxSpeed) ? HIGH : LOW);
+    }
+
+    else if (state == REVERSE)
+    {
+        digitalWrite(_led0, LOW);
+        analogWrite(_led1, map(_current_speed(), 0, _maxSpeed, 0, 255));
+        digitalWrite(_current_led(), (_current_speed() == _maxSpeed) ? HIGH : LOW);
+    }
+
+    else if (state == STOP)
+    {
+        digitalWrite(_led0, LOW);
+        digitalWrite(_led1, LOW);
+        digitalWrite(_current_led(), LOW);
+    }
+
+    else if (state == IDLE)
+    {
+        digitalWrite(_led0, LOW);
+        digitalWrite(_led1, LOW);
+    }
+
+    else if (state == WARNING)
+    {
+        digitalWrite(_led0, HIGH);
+        digitalWrite(_led1, HIGH);
+    }
+
+    else if (state == RUNNING)
+    {
+        if (previous == -1 || _locomotives[previous].speed() == 0)
+            return;
+        digitalWrite(_current_led(), HIGH);
+    }
+
+    else if (state == THROTTLE)
+    {
+        if (_current_dir() == -1)
+            indicatorLED(REVERSE);
+        else
+            indicatorLED(FORWARDS);
+    }
+}
