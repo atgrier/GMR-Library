@@ -6,6 +6,7 @@
 #include <arduino.h>
 #include "Locomotive.h"
 
+// Class containing methods to address the locomotive
 Locomotive::Locomotive(int address, int ledPin, RHReliableDatagram *manager)
 {
     _address = address;
@@ -49,7 +50,7 @@ void Locomotive::sendEStop()
     _manager->sendto((uint8_t *)pdata, strlen(pdata) + 1, _address);
 }
 
-Controller::Controller(int led0, int led1, int max_speed, std::initializer_list<Locomotive> locomotives)
+// Class for managing multiple locomotives controlled by a single physical controller
 {
     _locomotives = locomotives;
     _led0 = led0;

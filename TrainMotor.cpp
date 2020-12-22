@@ -6,6 +6,7 @@
 #include "Arduino.h"
 #include "TrainMotor.h"
 
+// Class for operating a light
 Lighting::Lighting(int LightPin)
 {
     _pin = LightPin;
@@ -193,6 +194,7 @@ void DualMotor::enable()
     _isEnabled = true;
 }
 
+// Bi-directional motor with Two control pins (A, B) and lights that correspond to forward/rearward movement
 TwoPinMotor::TwoPinMotor(int motor1Pin, int motor2Pin, Lighting *front = 0, Lighting *rear = 0)
 {
     pinMode(motor1Pin, OUTPUT);
