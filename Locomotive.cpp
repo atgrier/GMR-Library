@@ -51,6 +51,7 @@ void Locomotive::sendEStop()
 }
 
 // Class for managing multiple locomotives controlled by a single physical controller
+Controller::Controller(int led0, int led1, int max_speed, Locomotive *locomotives)
 {
     _locomotives = locomotives;
     _led0 = led0;
@@ -67,14 +68,14 @@ void Controller::setCurrent(int current_train)
 // Send throttle commands to all locomotives
 void Controller::sendThrottles()
 {
-    for (Locomotive &train : _locomotives)
-        train.sendThrottle();
+    for (int i = 0; i < _num_locomotives; i++)
+        _locomotives[i].sendThrottle();
 }
 
 // E-Stop all locomotives
 void Controller::eStopAll()
 {
-    for (int i = 0; i < (int)(sizeof(_locomotives) / sizeof(Locomotive)); i++)
+    for (int i = 0; i < _num_locomotives; i++)
     {
         digitalWrite(_locomotives[i].ledPin(), LOW);
         _locomotives[i].setSpeed(0);
@@ -82,8 +83,8 @@ void Controller::eStopAll()
     }
 
     for (int i = 0; i < 5; i++)
-        for (Locomotive &train : _locomotives)
-            train.sendEStop();
+        for (int j = 0; j < _num_locomotives; j++)
+            _locomotives[j].sendEStop();
 }
 
 // Set the curent locomotive's speed and direction, using the FORWARDS/REVERSE states
