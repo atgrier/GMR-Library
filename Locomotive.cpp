@@ -11,6 +11,7 @@ Locomotive::Locomotive(int address, int ledPin, RHReliableDatagram *manager)
 {
     _address = address;
     _ledPin = ledPin;
+    pinMode(_ledPin, OUTPUT);
     _manager = manager;
 }
 
@@ -56,6 +57,8 @@ Controller::Controller(int led0, int led1, int max_speed, Locomotive *locomotive
     _locomotives = locomotives;
     _led0 = led0;
     _led1 = led1;
+    pinMode(_led0, OUTPUT);
+    pinMode(_led1, OUTPUT);
     _maxSpeed = max_speed;
 }
 
