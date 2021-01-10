@@ -32,7 +32,8 @@ private:
 class Controller
 {
 public:
-    Controller(int led0, int led1, int max_speed, Locomotive *locomotives);
+    Controller(int led0, int led1, int max_speed, int num_locomotives,
+               Locomotive *locomotives);
     void setCurrent(int current_train);                // Set the currently selected locomotive by array index
     void setSpeed(int speed, int direction);           // Set the speed and direction
     void sendThrottles();                              // Send throttle commands to each train
@@ -47,7 +48,7 @@ private:
     int _current_speed() { return _locomotives[_current].speed(); };
     int _current_dir() { return _locomotives[_current].direction(); };
     Locomotive *_locomotives;
-    int _num_locomotives = (int)(sizeof(_locomotives) / sizeof(Locomotive));
+    int _num_locomotives;
     int _current = -1;
     int _led0;
     int _led1;

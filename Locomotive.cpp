@@ -52,9 +52,11 @@ void Locomotive::sendEStop()
 }
 
 // Class for managing multiple locomotives controlled by a single physical controller
-Controller::Controller(int led0, int led1, int max_speed, Locomotive *locomotives)
+Controller::Controller(int led0, int led1, int max_speed, int num_locomotives,
+                       Locomotive *locomotives)
 {
     _locomotives = locomotives;
+    _num_locomotives = num_locomotives;
     _led0 = led0;
     _led1 = led1;
     pinMode(_led0, OUTPUT);
