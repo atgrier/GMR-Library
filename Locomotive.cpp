@@ -39,7 +39,10 @@ void Locomotive::sendThrottle()
     char pdata[3];
     pdata[0] = 't';        // Throttle
     pdata[1] = _speed;     // Speed
-    pdata[2] = _direction; // Direction
+    pdata[2] = _direction == 1 ? 1 : 0; // Direction
+    // Serial.print(pdata[0]);
+    // Serial.print((int)pdata[1]);
+    // Serial.println((int)pdata[2]);
     _manager->sendto((uint8_t *)pdata, strlen(pdata) + 1, _address);
 }
 
