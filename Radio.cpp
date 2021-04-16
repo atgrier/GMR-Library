@@ -6,7 +6,7 @@
 #include "Radio.h"
 
 // Wrapper around RadioHead Driver
-Radio::Radio(int address, RHGenericDriver* driver)
+Radio::Radio(int address, RHGenericDriver *driver)
 {
     _address = address;
     _driver = driver;

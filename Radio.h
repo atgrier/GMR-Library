@@ -7,19 +7,19 @@
 #define Radio_h
 
 #include <Arduino.h>
-#include <RH_RF69.h>
+#include <RHGenericDriver.h>
 
 class Radio
 {
 public:
-    Radio(int address, RHGenericDriver* driver);
+    Radio(int address, RHGenericDriver *driver);
     bool send(uint8_t* message, uint8_t length, uint8_t to);        // Send message
     bool receive(uint8_t* message, uint8_t* length, uint8_t* from); // Reveive message
     bool available();                                               // Check messages
 
 private:
     int _address;             // Positive number
-    RHGenericDriver* _driver; // Radio driver
+    RHGenericDriver *_driver; // Radio driver
 };
 
 #endif
