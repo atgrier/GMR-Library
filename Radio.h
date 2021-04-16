@@ -16,6 +16,7 @@ public:
     bool send(uint8_t* message, uint8_t length, uint8_t to); // Send message
     bool receive(uint8_t* message, uint8_t* length, uint8_t* from, uint8_t* to,
                  uint8_t* id, uint8_t* flags); // Reveive message
+    bool available(); // Check if messages are available
 
 private:
     int _address; // Positive number

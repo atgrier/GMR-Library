@@ -41,3 +41,9 @@ bool Radio::receive(uint8_t* message, uint8_t* length, uint8_t* from, uint8_t* t
     }
     return false;
 }
+
+// Check if messages are available
+bool Radio::available()
+{
+    return _driver->available();
+}
