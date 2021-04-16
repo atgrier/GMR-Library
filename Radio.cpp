@@ -24,19 +24,12 @@ bool Radio::send(uint8_t* message, uint8_t length, uint8_t to)
 }
 
 // Receive message of length from address
-bool Radio::receive(uint8_t* message, uint8_t* length, uint8_t* from, uint8_t* to,
-    uint8_t* id, uint8_t* flags)
+bool Radio::receive(uint8_t* message, uint8_t* length, uint8_t* from)
 {
     if (_driver->recv(message, length))
     {
         if (from)
             *from = _driver->headerFrom();
-        if (to)
-            *to = _driver->headerTo();
-        if (id)
-            *id = _driver->headerId();
-        if (flags)
-            *flags = _driver->headerFlags();
         return true;
     }
     return false;

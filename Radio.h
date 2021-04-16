@@ -13,13 +13,12 @@ class Radio
 {
 public:
     Radio(int address, RHGenericDriver* driver);
-    bool send(uint8_t* message, uint8_t length, uint8_t to); // Send message
-    bool receive(uint8_t* message, uint8_t* length, uint8_t* from, uint8_t* to,
-                 uint8_t* id, uint8_t* flags); // Reveive message
-    bool available(); // Check if messages are available
+    bool send(uint8_t* message, uint8_t length, uint8_t to);        // Send message
+    bool receive(uint8_t* message, uint8_t* length, uint8_t* from); // Reveive message
+    bool available();                                               // Check messages
 
 private:
-    int _address; // Positive number
+    int _address;             // Positive number
     RHGenericDriver* _driver; // Radio driver
 };
 
