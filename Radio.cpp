@@ -6,14 +6,14 @@
 #include "Radio.h"
 
 // Wrapper around RadioHead Driver
-Radio::Radio(int address, RHGenericDriver *driver)
+Radio::Radio(int address, RH_RF69 *driver)
 {
   _address = address;
   _driver = driver;
 
   _driver->init();
-  _driver->setThisAddress(_address);
-  _driver->setHeaderFrom(_address);
+  // _driver->setThisAddress(_address);
+  // _driver->setHeaderFrom(_address);
 }
 
 // Send message of length to address
