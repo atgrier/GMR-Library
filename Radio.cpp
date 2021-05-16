@@ -12,7 +12,7 @@ Radio::Radio(int address, RH_RF69 &driver, int reset_pin):_driver(driver)
   _reset_pin = reset_pin;
 }
 
-void Radio::init()
+void Radio::init(float frequency, uint8_t *key)
 {
   pinMode(_reset_pin, OUTPUT);
   digitalWrite(_reset_pin, LOW);
@@ -24,6 +24,10 @@ void Radio::init()
   _driver.init();
   _driver.setThisAddress(_address);
   _driver.setHeaderFrom(_address);
+
+  _driver.setFrequency(frequency);
+  _driver.setTxPower(20, true);
+  _driver.setEncryptionKey(key);
 }
 
 // Send message of length to address
