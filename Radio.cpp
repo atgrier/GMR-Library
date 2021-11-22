@@ -29,7 +29,6 @@ void Radio::init(float frequency, uint8_t *key)
 
   _driver.setFrequency(frequency);
   _driver.setTxPower(20, true);
-  _driver.setEncryptionKey(key);
 }
 
 // Send message of length to address
