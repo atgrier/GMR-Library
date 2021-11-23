@@ -13,7 +13,7 @@ Radio::Radio(int address, RH_RF69 &driver, int reset_pin):_driver(driver)
 }
 
 // Wrapper around RadioHead init method. Must be called AFTER Serial.begin()
-void Radio::init(float frequency, uint8_t *key)
+void Radio::init(float frequency)
 {
   Serial.flush();
   pinMode(_reset_pin, OUTPUT);
