@@ -9,10 +9,10 @@
 #include <Arduino.h>
 #include <Radio.h>
 
-class Locomotive
+class LocomotiveController
 {
 public:
-  Locomotive(int address, int ledPin, Radio *radio);
+  LocomotiveController(int address, int ledPin, Radio *radio);
   void reverse();           // Change direction to -1
   void forward();           // Change direction to 1
   void setSpeed(int speed); // Set the speed of the locomotive
@@ -34,7 +34,7 @@ class Controller
 {
 public:
   Controller(int led0, int led1, int max_speed, int num_locomotives,
-         Locomotive *locomotives);
+         LocomotiveController *locomotives);
   void setCurrent(int current_train);                // Set the currently selected locomotive by array index
   void setSpeed(int speed, int direction);           // Set the speed and direction
   void sendThrottles();                              // Send throttle commands to each train
@@ -48,7 +48,7 @@ private:
   int _current_led() { return _locomotives[_current].ledPin(); };
   int _current_speed() { return _locomotives[_current].speed(); };
   int _current_dir() { return _locomotives[_current].direction(); };
-  Locomotive *_locomotives;
+  LocomotiveController *_locomotives;
   int _num_locomotives;
   int _current = -1;
   int _led0;

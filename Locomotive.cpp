@@ -6,7 +6,7 @@
 #include "Locomotive.h"
 
 // Class containing methods to address the locomotive
-Locomotive::Locomotive(int address, int ledPin, Radio *radio)
+LocomotiveController::LocomotiveController(int address, int ledPin, Radio *radio)
 {
   _address = address;
   _ledPin = ledPin;
@@ -15,25 +15,25 @@ Locomotive::Locomotive(int address, int ledPin, Radio *radio)
 }
 
 // Set locomotive's direction to -1 (reverse)
-void Locomotive::reverse()
+void LocomotiveController::reverse()
 {
   _direction = -1;
 }
 
 // Set locomotive's direction to 1 (forward)
-void Locomotive::forward()
+void LocomotiveController::forward()
 {
   _direction = 1;
 }
 
 // Set the speed of the locomotive
-void Locomotive::setSpeed(int speed)
+void LocomotiveController::setSpeed(int speed)
 {
   _speed = speed;
 }
 
 // Send throttle command with current speed and direction
-void Locomotive::sendThrottle()
+void LocomotiveController::sendThrottle()
 {
   char pdata[3];
   pdata[0] = 't';                     // Throttle
@@ -46,7 +46,7 @@ void Locomotive::sendThrottle()
 }
 
 // Send E-Stop command
-void Locomotive::sendEStop()
+void LocomotiveController::sendEStop()
 {
   char pdata[1];
   pdata[0] = 'e'; // E-Stop
@@ -55,7 +55,7 @@ void Locomotive::sendEStop()
 
 // Class for managing multiple locomotives controlled by a single physical controller
 Controller::Controller(int led0, int led1, int max_speed, int num_locomotives,
-                       Locomotive *locomotives)
+                       LocomotiveController *locomotives)
 {
   _locomotives = locomotives;
   _num_locomotives = num_locomotives;

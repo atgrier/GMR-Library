@@ -87,7 +87,7 @@ void _rampSpeed(int pin, int start, int target, bool inverse = false)
   }
 }
 
-SingleMotor::SingleMotor(int speedPin, int motorPin)
+SinglePinMotor::SinglePinMotor(int speedPin, int motorPin)
 {
   pinMode(speedPin, OUTPUT);
   pinMode(motorPin, OUTPUT);
@@ -99,7 +99,7 @@ SingleMotor::SingleMotor(int speedPin, int motorPin)
   _isEnabled = false;
 }
 
-void SingleMotor::setSpeed(int motorSpeed)
+void SinglePinMotor::setSpeed(int motorSpeed)
 {
   if (motorSpeed == _motorSpeed)
     return;
@@ -107,7 +107,7 @@ void SingleMotor::setSpeed(int motorSpeed)
   _motorSpeed = motorSpeed;
 }
 
-void SingleMotor::disable()
+void SinglePinMotor::disable()
 {
   if (!_isEnabled)
     return;
@@ -115,7 +115,7 @@ void SingleMotor::disable()
   _isEnabled = false;
 }
 
-void SingleMotor::enable()
+void SinglePinMotor::enable()
 {
   if (_isEnabled)
     return;
@@ -123,7 +123,7 @@ void SingleMotor::enable()
   _isEnabled = true;
 }
 
-DualMotor::DualMotor(int speedPin, int motor1Pin, int motor2Pin)
+ThreePinMotor::ThreePinMotor(int speedPin, int motor1Pin, int motor2Pin)
 {
   pinMode(speedPin, OUTPUT);
   pinMode(motor1Pin, OUTPUT);
@@ -139,7 +139,7 @@ DualMotor::DualMotor(int speedPin, int motor1Pin, int motor2Pin)
   _isEnabled = false;
 }
 
-void DualMotor::setSpeed(int motorSpeed)
+void ThreePinMotor::setSpeed(int motorSpeed)
 {
   int _msp = abs(motorSpeed);
   int _dir = (motorSpeed < 0) ? -1 : 1;
@@ -168,7 +168,7 @@ void DualMotor::setSpeed(int motorSpeed)
   _isEnabled = true;
 }
 
-void DualMotor::disable()
+void ThreePinMotor::disable()
 {
   if (!_isEnabled)
     return;
@@ -177,7 +177,7 @@ void DualMotor::disable()
   _isEnabled = false;
 }
 
-void DualMotor::enable()
+void ThreePinMotor::enable()
 {
   if (_isEnabled)
     return;

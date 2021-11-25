@@ -19,10 +19,10 @@ private:
 };
 
 // SingleMotor is currently out of date
-class SingleMotor
+class SinglePinMotor
 {
 public:
-  SingleMotor(int speedPin, int motorPin);
+  SinglePinMotor(int speedPin, int motorPin);
   void setSpeed(int motorSpeed); // Speed from 0 to 255
   void disable();
   void enable();
@@ -35,10 +35,10 @@ private:
 };
 
 // DualMotor is currently out of date
-class DualMotor
+class ThreePinMotor
 {
 public:
-  DualMotor(int speedPin, int motor1Pin, int motor2Pin);
+  ThreePinMotor(int speedPin, int motor1Pin, int motor2Pin);
   void setSpeed(int motorSpeed); // Speed from -255 to 255
   void disable();
   void enable();
