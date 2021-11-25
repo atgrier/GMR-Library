@@ -6,7 +6,7 @@
 #include "Radio.h"
 
 // Wrapper around RadioHead Driver
-Radio::Radio(int address, RH_RF69 &driver, int reset_pin):_driver(driver)
+Radio::Radio(int address, RH_RF69 &driver, int reset_pin) : _driver(driver)
 {
   _address = address;
   _reset_pin = reset_pin;
@@ -32,22 +32,25 @@ void Radio::init(float frequency)
 }
 
 // Send message of length to address
-bool Radio::send(uint8_t *message, uint8_t length, uint8_t to)
+bool Radio::send(char *message, uint8_t to)
 {
   _driver.setHeaderTo(to);
-  return _driver.send(message, length);
+  return _driver.send((uint8_t *)message, strlen(message) + 1);
 }
 
 // Receive message of length from address
-bool Radio::receive(uint8_t *message, uint8_t *length, uint8_t *from)
+bool Radio::receive(char *message, uint8_t *from)
 {
-  if (_driver.recv(message, length))
+  if (available())
   {
-    if (from)
-      *from = _driver.headerFrom();
-    return true;
+    if (_driver.recv((uint8_t *)message, &_len))
+    {
+      if (from)
+        *from = _driver.headerFrom();
+      return true;
+    }
+    return false;
   }
-  return false;
 }
 
 // Check if messages are available
