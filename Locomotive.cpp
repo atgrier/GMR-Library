@@ -5,6 +5,72 @@
 
 #include "Locomotive.h"
 
+LocomotiveReceiver::LocomotiveReceiver(int address, TwoPinMotor *motor, Lighting *light_cab, Radio *radio)
+{
+  _address = address;
+  _motor = motor;
+  _light_cab = light_cab;
+  _radio = radio;
+  _light_cab->On();
+}
+
+bool LocomotiveReceiver::parseRadio()
+{
+  char command;
+  uint8_t from;
+  if (_radio->receive(&command, &from))
+  {
+    //Serial.print("got request from : 0x");
+    //Serial.print(from, HEX);
+    //Serial.print(": ");
+    // Serial.println(len);
+    // Serial.println((char*)buf);
+    parseCommand(&command);
+  }
+}
+
+void LocomotiveReceiver::parseCommand(char *command)
+{
+  switch (command[0])
+  {
+  case 'e': // E-Stop
+    _motor->disable(true);
+    break;
+
+  case 't': // Throttle
+    throttle(command);
+    break;
+
+  case 'f': // Function
+    function(command);
+    break;
+  }
+}
+
+void LocomotiveReceiver::shutDown(bool endless)
+{
+  _motor->disable(true);
+  _light_cab->Off();
+  while (endless)
+    ;
+}
+
+void LocomotiveReceiver::throttle(char *command)
+{
+  int spd = (int)command[1];
+  int dir = (int)command[2] == 1 ? 1 : -1;
+
+  if (spd == -1)
+    _motor->disable(true);
+  else
+    _motor->setSpeed(spd * dir);
+}
+
+void LocomotiveReceiver::function(char *command)
+{
+  0;
+}
+
 // Class containing methods to address the locomotive
 LocomotiveController::LocomotiveController(int address, int ledPin, Radio *radio)
 {
@@ -42,7 +108,7 @@ void LocomotiveController::sendThrottle()
   // Serial.print(pdata[0]);
   // Serial.print((int)pdata[1]);
   // Serial.println((int)pdata[2]);
-  _radio->send((uint8_t *)pdata, strlen(pdata) + 1, _address);
+  _radio->send(pdata, _address);
 }
 
 // Send E-Stop command
@@ -50,7 +116,7 @@ void LocomotiveController::sendEStop()
 {
   char pdata[1];
   pdata[0] = 'e'; // E-Stop
-  _radio->send((uint8_t *)pdata, strlen(pdata) + 1, _address);
+  _radio->send(pdata, _address);
 }
 
 // Class for managing multiple locomotives controlled by a single physical controller

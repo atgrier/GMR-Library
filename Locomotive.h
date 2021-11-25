@@ -8,6 +8,26 @@
 
 #include <Arduino.h>
 #include <Radio.h>
+#include <TrainMotor.h>
+
+class LocomotiveReceiver
+{
+public:
+  LocomotiveReceiver(int address, TwoPinMotor *motor, Lighting *light_cab, Radio *radio);
+  void shutDown(bool endless);
+  void parseCommand(char *command);
+  bool parseRadio();
+  void throttle(char *command);
+  void function(char *command);
+
+private:
+  int _speed = 0;     // Positive number from 0 to 255
+  int _direction = 1; // -1 for reverse, +1 for forward
+  int _address;       // Positive number
+  Radio *_radio;      // Radio manager
+  TwoPinMotor *_motor;
+  Lighting *_light_cab;
+};
 
 class LocomotiveController
 {
@@ -34,7 +54,7 @@ class Controller
 {
 public:
   Controller(int led0, int led1, int max_speed, int num_locomotives,
-         LocomotiveController *locomotives);
+             LocomotiveController *locomotives);
   void setCurrent(int current_train);                // Set the currently selected locomotive by array index
   void setSpeed(int speed, int direction);           // Set the speed and direction
   void sendThrottles();                              // Send throttle commands to each train
