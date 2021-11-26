@@ -39,11 +39,11 @@ bool Radio::send(char *message, uint8_t to)
 }
 
 // Receive message of length from address
-bool Radio::receive(char *message, uint8_t *from)
+bool Radio::receive(char *message, uint8_t *from, uint8_t *len)
 {
   if (available())
   {
-    if (_driver.recv((uint8_t *)message, &_len))
+    if (_driver.recv((uint8_t *)message, len))
     {
       if (from)
         *from = _driver.headerFrom();
