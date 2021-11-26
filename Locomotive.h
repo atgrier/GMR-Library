@@ -77,7 +77,7 @@ private:
 };
 
 // Indicator LED states
-#define FORWARDS 0
+#define FORWARD 0
 #define REVERSE 1
 #define STOP 2
 #define IDLE 3

@@ -160,11 +160,11 @@ void Controller::eStopAll()
       _locomotives[j].sendEStop();
 }
 
-// Set the curent locomotive's speed and direction, using the FORWARDS/REVERSE states
+// Set the curent locomotive's speed and direction, using the FORWARD/REVERSE states
 void Controller::setSpeed(int speed, int direction)
 {
   _locomotives[_current].setSpeed(speed);
-  if (direction == FORWARDS)
+  if (direction == FORWARD)
     _locomotives[_current].forward();
   else
     _locomotives[_current].reverse();
@@ -173,7 +173,7 @@ void Controller::setSpeed(int speed, int direction)
 // Set indicator LED
 void Controller::indicatorLED(int state, int previous = -1)
 {
-  if (state == FORWARDS)
+  if (state == FORWARD)
   {
     digitalWrite(_led1, LOW);
     analogWrite(_led0, map(_current_speed(), 0, _maxSpeed, 0, 255));
@@ -218,6 +218,6 @@ void Controller::indicatorLED(int state, int previous = -1)
     if (_current_dir() == -1)
       indicatorLED(REVERSE);
     else
-      indicatorLED(FORWARDS);
+      indicatorLED(FORWARD);
   }
 }
