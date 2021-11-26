@@ -53,8 +53,7 @@ private:
 class Controller
 {
 public:
-  Controller(int led0, int led1, int max_speed, int num_locomotives,
-             LocomotiveController *locomotives);
+  Controller(int led0, int led1, int max_speed,LocomotiveController *locomotives, int num_locomotives);
   void setCurrent(int current_train);                // Set the currently selected locomotive by array index
   void setSpeed(int speed, int direction);           // Set the speed and direction
   void sendThrottles();                              // Send throttle commands to each train
